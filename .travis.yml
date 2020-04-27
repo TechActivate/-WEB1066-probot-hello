@@ -1,49 +1,8 @@
-sudo: required
-services:
-  - docker
+sudo: enabled
+language: python
 
-env:
-  - NODE_VERSION=8-jessie
-#  - $DOCKER_USERNAME=10-jessie
-#  - NPM_TARGET=test
-#  - NPM_TARGET=lint
-#  - NPM_TARGET=coverage
+before_install:
+  - sudo apt-get update && sudo apt-get install -y python-yaml
 
 script:
-  - docker login -u "$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker build -t node:$NODE_VERSION --build-arg=NODE_IMAGE=node:$DOCKER_USERNAME .
-  - docker images
-  - docker tag node:$NODE_VERSION $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
-  - docker push  $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
-
-stages:
-  - test
-  - npm-targets
-
-jobs:
-  include:
-    - stage: npm-targets
-      name: "Test 8-jessie"
-      install: skip
-      script:
-        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
-      env:
-        - NODE_VERSION=8-jessie
-        - NPM_TARGET=test
-    - stage: npm-targets
-      name: "Lint 8-jessie"
-      install: skip
-      script:
-        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
-      env:
-        - NODE_VERSION=8-jessie
-        - NPM_TARGET=lint
-    - stage: npm-targets
-      name: "Test 8-jessie"
-      install: skip
-      script:
-        if branch = master
-        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
-      env:
-        - NODE_VERSION=8-jessie
-        - NPM_TARGET=coverage
+  - sudo python2 -c "from yaml import load, dump"
