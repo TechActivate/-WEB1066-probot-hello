@@ -4,14 +4,13 @@ services:
 
 env:
   - NODE_VERSION=8-jessie
-  - DOCKER_USERNAME=someone
 #  - NPM_TARGET=test
 #  - NPM_TARGET=lint
 #  - NPM_TARGET=coverage
 
 script:
   - docker login -u "$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker build -t node:$NODE_VERSION --build-arg=NODE_IMAGE=node:$DOCKER_USERNAME .
+  - docker build -t node:$NODE_VERSION --build-arg NODE_IMAGE=node:$NODE_VERSION .
   - docker images
   - docker tag node:$NODE_VERSION $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
   - docker push  $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
