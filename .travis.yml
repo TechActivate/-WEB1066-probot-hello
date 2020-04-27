@@ -4,7 +4,7 @@ services:
 
 env:
   - NODE_VERSION=8-jessie
-#  - $DOCKER_USERNAME=10-jessie
+  - DOCKER_USERNAME=someone
 #  - NPM_TARGET=test
 #  - NPM_TARGET=lint
 #  - NPM_TARGET=coverage
