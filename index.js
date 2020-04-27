@@ -7,7 +7,7 @@ module.exports = app => {
   app.log('Yay, the app was loaded!')
 
   app.on('issues.opened', async context => {
-    const issueComment = context.issue({ body: Date + 'Thanks for opening this issue! We shall get in touch with you soon - or fix it even without getting in touch.' })
+    const issueComment = context.issue({ body: 'TechActivate responded on ' + Date() + ': thanks for opening this issue! We shall get in touch with you soon - or fix it even without getting in touch.' })
     return context.github.issues.createComment(issueComment)
   })
 
